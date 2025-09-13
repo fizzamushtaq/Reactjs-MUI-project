@@ -1,58 +1,69 @@
-import React from 'react'
-import { useState } from 'react'
-import {AppBar, Toolbar} from '@mui/material'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import CoffeeIcon from '@mui/icons-material/Coffee';
-import { useTheme } from '@emotion/react'
-import { Box, Drawer, useMediaQuery } from '@mui/material'
+import React, { useState } from 'react'
+import { AppBar, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Button, Typography, Container, Box, Drawer, useMediaQuery } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import CoffeeIcon from '@mui/icons-material/Coffee'
+import { useTheme } from '@mui/material/styles'  
+
 function Navbar() {
-    const [drawerOpen, setDrawerOpen] = useState(false )
-    const theme =useTheme()
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))   // ✅ FIXED
 
-    // const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open)
+  }
 
-    const toggleDrawer = (open) => ()=>{
-        setDrawerOpen(open)
-    }
+  const drawerLinks = [   
+    { text: "Home", link: "#home" },
+    { text: "Coffee", link: "#coffee" }
+  ]
 
-    const drawerLinks = [
-        {
-
-            text: "home",
-            link: "#home",
-            text: "Coffee",
-            link: "#Coffee",
-        }
-    ]
-
-    return (
-        <>
-        <AppBar position="sticky" color="primary">
-            <Container>
-              <Toolbar>
-                <CoffeeIcon/>
-            <Typography variant="h5" sx={{flexGrow: 1,fontFamily: 'Eagle Lake, serif'}}>
+  return (
+    <>
+      <AppBar position="sticky" color="primary">
+        <Container>
+          <Toolbar>
+            <CoffeeIcon />
+            <Typography variant="h5" sx={{ flexGrow: 1, fontFamily: 'Eagle Lake, serif' }}>
               coffee
             </Typography>
-             <Button  color="inherit" href="home">
-              Home
-            </Button>
-             <Button  color="inherit" href="home">
-              Coffee
-            </Button>
-          </Toolbar>
-            </Container>
-        </AppBar>
 
-        <Drawer anchor='right' open={drawerOpen} onClose={toggleDrawer(false)}>
-            <Box>
-            </Box>
-        </Drawer>
-        </>
-    )
+            {isMobile && (
+              <IconButton color='inherit' onClick={toggleDrawer(true)}>
+                <MenuIcon />
+              </IconButton>
+            )}
+
+            {!isMobile && (
+              <>
+                <Button color="inherit" href="#home">Home</Button>
+                <Button color="inherit" href="#coffee">Coffee</Button>
+              </>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      <Drawer anchor='right' open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)}>
+          <List>
+            {drawerLinks.map((linkItem, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton
+                  component="a"
+                  href={linkItem.link}
+                  onClick={toggleDrawer(false)}
+                  aria-label={`Navigate to ${linkItem.text}`}
+                >
+                  <ListItemText primary={linkItem.text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+    </>
+  )
 }
 
-export default Navbar;
-
+export default Navbar
