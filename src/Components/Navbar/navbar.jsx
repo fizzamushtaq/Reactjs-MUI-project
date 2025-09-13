@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AppBar, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Button, Typography, Container, Box, Drawer, useMediaQuery } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import CoffeeIcon from '@mui/icons-material/Coffee'
+import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 import { useTheme } from '@mui/material/styles'  
 
 function Navbar() {
@@ -15,7 +15,7 @@ function Navbar() {
 
   const drawerLinks = [   
     { text: "Home", link: "#home" },
-    { text: "Coffee", link: "#coffee" }
+    { text: "Honey Products", link: "#honey products" }
   ]
 
   return (
@@ -23,9 +23,9 @@ function Navbar() {
       <AppBar position="sticky" color="primary">
         <Container>
           <Toolbar>
-            <CoffeeIcon />
+            <EmojiNatureIcon />
             <Typography variant="h5" sx={{ flexGrow: 1, fontFamily: 'Eagle Lake, serif' }}>
-              coffee
+              Honey
             </Typography>
 
             {isMobile && (
@@ -37,7 +37,7 @@ function Navbar() {
             {!isMobile && (
               <>
                 <Button color="inherit" href="#home">Home</Button>
-                <Button color="inherit" href="#coffee">Coffee</Button>
+                <Button color="inherit" href="#honey products">Honey Products</Button>
               </>
             )}
           </Toolbar>
